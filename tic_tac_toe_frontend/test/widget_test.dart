@@ -1,18 +1,22 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:tic_tac_toe_frontend/main.dart';
 
 void main() {
-  testWidgets('App generation message displayed', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Shows selection UI and title', (WidgetTester tester) async {
+    await tester.pumpWidget(const TicTacToeApp());
 
-    expect(find.text('tic_tac_toe_frontend App is being generated...'), findsOneWidget);
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.text('Tic Tac Toe'), findsWidgets);
+    expect(find.text('Choose your symbol'), findsOneWidget);
+    expect(find.text('X'), findsWidgets);
+    expect(find.text('O'), findsWidgets);
   });
 
-  testWidgets('App bar has correct title', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Selecting X starts the game and shows turn', (WidgetTester tester) async {
+    await tester.pumpWidget(const TicTacToeApp());
 
-    expect(find.text('tic_tac_toe_frontend'), findsOneWidget);
+    await tester.tap(find.text('X').first);
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('Turn: '), findsOneWidget);
   });
 }
